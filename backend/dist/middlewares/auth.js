@@ -55,6 +55,8 @@ var auth = function (req, res, next) { return __awaiter(void 0, void 0, void 0, 
             decode = jsonwebtoken_1.default.verify(token, config_1.JWT_SECRET);
             // @ts-ignore --fix this -----
             req.id = decode.id;
+            // @ts-ignore --fix this -----
+            req.role = decode.role;
             next();
         }
         catch (error) {

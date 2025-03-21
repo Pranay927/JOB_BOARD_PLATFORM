@@ -51,7 +51,8 @@ const applicationSchema = new Schema({
         required:true
     },
     resumeUrl:{
-        type:String
+        type:String,
+        required:true
     },
     seekerId:{
         type:mongoose.Schema.Types.ObjectId,

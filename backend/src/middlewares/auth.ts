@@ -1,5 +1,5 @@
 import { JWT_SECRET } from "../config";
-import jwt from "jsonwebtoken"
+import jwt, { JwtPayload } from "jsonwebtoken"
 import express, { Request, Response,NextFunction } from "express";
 
 export const auth = async(req:Request, res: Response, next: NextFunction)=>{
@@ -14,6 +14,9 @@ export const auth = async(req:Request, res: Response, next: NextFunction)=>{
         
         // @ts-ignore --fix this -----
         req.id = (decode as JwtPayload).id;
+        
+        // @ts-ignore --fix this -----
+        req.role = (decode as JwtPayload).role;
         next();
 
     } catch (error) {

@@ -3,9 +3,14 @@ import express from "express"
 import mongoose from "mongoose";
 const app = express();
 import user from "./routes/user"
-
+import jobs from './routes/jobs'
+import apply from "./routes/apply"
 app.use(express.json());
 app.use("/api/v1/user", user);
+app.use("/api/v1/jobs", jobs);
+app.use("/api/v1/apply", jobs);
+
+
 
 
 const main=async()=>{

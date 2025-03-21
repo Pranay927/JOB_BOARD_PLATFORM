@@ -10,7 +10,7 @@ import {auth} from "../middlewares/auth"
 
 router.post("/signup", async(req, res)=>{
     try {
-        const {username, password} = req.body;
+        const {username, password, role} = req.body;
         const inputCheck = inputSchema.safeParse({username, password});
         if(!inputCheck.success){
             res.status(400).json({Error: inputCheck.error});
@@ -19,7 +19,8 @@ router.post("/signup", async(req, res)=>{
         const hashedPassword  = await bcrypt.hash(password,7)
         await User.create({
             username, 
-            password : hashedPassword
+            password : hashedPassword,
+            role: role||undefined
         })
         res.json({Message: "User Signed up successfully"});
         return;
@@ -49,7 +50,7 @@ router.post("/signin", async(req, res)=>{
           }
         
         if(JWT_SECRET === undefined) return;
-        const token = jwt.sign({id:user._id}, JWT_SECRET)
+        const token = jwt.sign({id:user._id, role:user.role}, JWT_SECRET)
         res.json({Message: `${user.username} is signed in! `,
                   Token:token});
         
