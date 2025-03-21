@@ -5,6 +5,9 @@ const app = express();
 import user from "./routes/user"
 import jobs from './routes/jobs'
 import apply from "./routes/apply"
+import cors from "cors";
+
+app.use(cors())
 app.use(express.json());
 app.use("/api/v1/user", user);
 app.use("/api/v1/jobs", jobs);

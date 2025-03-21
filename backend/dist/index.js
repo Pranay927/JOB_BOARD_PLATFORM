@@ -45,9 +45,12 @@ var mongoose_1 = __importDefault(require("mongoose"));
 var app = (0, express_1.default)();
 var user_1 = __importDefault(require("./routes/user"));
 var jobs_1 = __importDefault(require("./routes/jobs"));
+var cors_1 = __importDefault(require("cors"));
+app.use((0, cors_1.default)());
 app.use(express_1.default.json());
 app.use("/api/v1/user", user_1.default);
 app.use("/api/v1/jobs", jobs_1.default);
+app.use("/api/v1/apply", jobs_1.default);
 var main = function () { return __awaiter(void 0, void 0, void 0, function () {
     var error_1;
     return __generator(this, function (_a) {

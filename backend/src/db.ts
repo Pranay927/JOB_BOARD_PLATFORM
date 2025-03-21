@@ -18,32 +18,41 @@ const userSchema = new Schema({
     },
 })
 
-const jobSchema = new Schema({
-    title:{
-        type:String,
-        required:true,
+const jobSchema = new mongoose.Schema({
+    title: {
+      type: String,
+      required: true,
     },
-    description:{
-        type:String,
-        required:true,
-  
+   
+    
+    logo: { 
+        type: String 
+    }, // Optional company logo URL
+    
+    postedAt: {
+      type: Date,
+      default: Date.now,
     },
-    company:{
-        type:String,
-        required:true,
-        unique:true
+    type: {
+      type: String,
+      enum: ["Full-time", "Part-time", "Contract", "Internship"],
     },
-    postedAt:{
-        type: Date,
-        default: Date.now 
+    level: {
+      type: String,
+      enum: ["Entry", "Mid", "Senior", "Lead"],
     },
-    companyId:{
-        type:mongoose.Schema.Types.ObjectId,
-        ref:'User',
-        required:true
-    }
-
-})
+    salary: {
+      type: String, 
+    },
+    location: {
+      type: String,
+    },
+    companyId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
+});
 
 const applicationSchema = new Schema({
     name:{

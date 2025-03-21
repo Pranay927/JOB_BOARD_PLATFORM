@@ -52,7 +52,8 @@ var applicationSchema = new Schema({
         required: true
     },
     resumeUrl: {
-        type: String
+        type: String,
+        required: true
     },
     seekerId: {
         type: mongoose_1.default.Schema.Types.ObjectId,

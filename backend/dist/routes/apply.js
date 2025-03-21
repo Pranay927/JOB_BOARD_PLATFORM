@@ -42,55 +42,28 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var express_1 = __importDefault(require("express"));
 var router = express_1.default.Router();
 var db_1 = require("../db");
-var types_1 = require("../types");
 var auth_1 = require("../middlewares/auth");
 var restrictTo_1 = require("../middlewares/restrictTo");
-// Route to create a new Job : restricted to user of Role: "company"
-router.post('/', auth_1.auth, (0, restrictTo_1.restrictTo)('Company'), function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var _a, title, description, company, companyId, jobSchemaCheck, newJob, error_1;
+router.post('/', auth_1.auth, (0, restrictTo_1.restrictTo)('Seeker'), function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var id, _a, name_1, resumeUrl, jobId, error_1;
     return __generator(this, function (_b) {
         switch (_b.label) {
             case 0:
                 _b.trys.push([0, 2, , 3]);
-                _a = req.body, title = _a.title, description = _a.description, company = _a.company;
-                companyId = req.id;
-                jobSchemaCheck = types_1.jobSchema.safeParse({ title: title, description: description, company: company });
-                if (!jobSchemaCheck.success) {
-                    res.status(400).json({ Error: jobSchemaCheck.error });
-                    return [2 /*return*/];
-                }
-                return [4 /*yield*/, db_1.Jobs.create({
-                        title: title,
-                        description: description,
-                        company: company,
-                        companyId: companyId
+                id = req.id.id;
+                _a = req.body, name_1 = _a.name, resumeUrl = _a.resumeUrl, jobId = _a.jobId;
+                return [4 /*yield*/, db_1.Application.create({
+                        name: name_1,
+                        resumeUrl: resumeUrl,
+                        seekerId: id,
+                        jobId: jobId
                     })];
             case 1:
-                newJob = _b.sent();
-                return [2 /*return*/, res.json({ Message: "Job created successfully" })];
+                _b.sent();
+                return [3 /*break*/, 3];
             case 2:
                 error_1 = _b.sent();
-                res.status(400).json({ Error: error_1 });
-                return [3 /*break*/, 3];
-            case 3: return [2 /*return*/];
-        }
-    });
-}); });
-// endpoint to get all the jobs listed
-router.get('/', function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var allJobs, error_2;
-    return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0:
-                _a.trys.push([0, 2, , 3]);
-                return [4 /*yield*/, db_1.Jobs.find()];
-            case 1:
-                allJobs = _a.sent();
-                return [2 /*return*/, res.json({ Message: allJobs })];
-            case 2:
-                error_2 = _a.sent();
-                res.status(400).json({ Error: error_2 });
-                return [3 /*break*/, 3];
+                return [2 /*return*/, res.json({ Error: error_1 })];
             case 3: return [2 /*return*/];
         }
     });

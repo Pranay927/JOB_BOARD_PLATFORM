@@ -12,30 +12,33 @@ import { restrictTo } from '../middlewares/restrictTo';
 // Route to create a new Job : restricted to user of Role: "company"
 router.post('/', auth, restrictTo('Company'), async(req,res)=>{
     try {
-        const {title, description, company} = req.body;
+        const { title, logo ,type, level, salary, location } = req.body;
         // @ts-ignore
         const companyId = req.id;
-        const jobSchemaCheck = jobSchema.safeParse({title,description,company})
+        const jobSchemaCheck = jobSchema.safeParse({title, logo ,type, level, salary, location})
         if(!jobSchemaCheck.success){
             res.status(400).json({Error: jobSchemaCheck.error});
             return;
         }
         const newJob = await Jobs.create({
             title,
-            description,
-            company,
-            companyId
-        })
+            logo,
+            type,
+            level,
+            salary,
+            location,
+            companyId,
+          });
         return res.json({Message:"Job created successfully"})
     } catch (error) {
         res.status(400).json({Error:error});
     }
 })
 // endpoint to get all the jobs listed
-router.get('/', auth, async(req,res)=>{
+router.get('/', async(req,res)=>{
     try {
         const allJobs = await Jobs.find();
-        return res.json({JobsAvailable:allJobs});
+        return res.json({Message:allJobs});
         
     } catch (error) {
         res.status(400).json({Error:error});
