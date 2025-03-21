@@ -39,36 +39,29 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var config_1 = require("./config");
-var express_1 = __importDefault(require("express"));
-var mongoose_1 = __importDefault(require("mongoose"));
-var app = (0, express_1.default)();
-var user_1 = __importDefault(require("./routes/user"));
-app.use(express_1.default.json());
-app.use("/api/v1/user", user_1.default);
-var main = function () { return __awaiter(void 0, void 0, void 0, function () {
-    var error_1;
+exports.auth = void 0;
+var config_1 = require("../config");
+var jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
+var auth = function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
+    var authorization, token, decode;
     return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0:
-                _a.trys.push([0, 2, , 3]);
-                // If the dbUrl is not defined, throwing a error manually
-                if (!config_1.DATABASE_URL)
-                    throw new Error("Please provide a database url for mongo.");
-                return [4 /*yield*/, mongoose_1.default.connect(config_1.DATABASE_URL)];
-            case 1:
-                _a.sent();
-                //start the express server
-                app.listen(config_1.PORT, function () {
-                    console.log("Server running on PORT ".concat(config_1.PORT));
-                });
-                return [3 /*break*/, 3];
-            case 2:
-                error_1 = _a.sent();
-                console.log(error_1);
-                return [3 /*break*/, 3];
-            case 3: return [2 /*return*/];
+        try {
+            authorization = req.headers.authorization;
+            token = authorization === null || authorization === void 0 ? void 0 : authorization.split(' ')[1];
+            if (!token)
+                return [2 /*return*/, res.status(403).json({ error: "Unauthorized" })];
+            if (config_1.JWT_SECRET === undefined)
+                return [2 /*return*/];
+            decode = jsonwebtoken_1.default.verify(token, config_1.JWT_SECRET);
+            // @ts-ignore --fix this -----
+            req.id = decode.id;
+            next();
         }
+        catch (error) {
+            res.status(400).json({ Error: error });
+            return [2 /*return*/];
+        }
+        return [2 /*return*/];
     });
 }); };
-main();
+exports.auth = auth;

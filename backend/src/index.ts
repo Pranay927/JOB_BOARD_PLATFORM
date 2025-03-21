@@ -1,19 +1,18 @@
-require("dotenv").config();
-
+import { PORT, DATABASE_URL } from "./config";
 import express from "express"
 import mongoose from "mongoose";
 const app = express();
+import user from "./routes/user"
 
 app.use(express.json());
+app.use("/api/v1/user", user);
 
-const dbUrl = process.env.DATABASE_URL;
-const PORT = process.env.PORT
 
 const main=async()=>{
     try {
         // If the dbUrl is not defined, throwing a error manually
-        if(!dbUrl) throw new Error("Please provide a database url for mongo.");
-        await mongoose.connect(dbUrl);
+        if(!DATABASE_URL) throw new Error("Please provide a database url for mongo.");
+        await mongoose.connect(DATABASE_URL);
 
         //start the express server
         app.listen(PORT, ()=>{
