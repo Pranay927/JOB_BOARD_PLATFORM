@@ -59,16 +59,6 @@ router.post("/signin", async(req, res)=>{
             res.status(400).json({Error:error});
         }
     })
-    router.post("/authenticated", auth, async(req, res)=>{
-        // @ts-ignore
-        const {id}  = req;
-        
-        try {
-            res.json({Message:"Your Token is "+id})
-        } catch (error) {
-            res.status(400).json({Error:error});
-    }
-})
-
+   
 
 export default router;

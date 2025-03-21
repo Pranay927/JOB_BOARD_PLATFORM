@@ -22,8 +22,8 @@ export default function Navbar() {
         </Link>
         <span className="text-gray-400">/</span>
 
-        <Link to="/jobs" className="hover:text-gray-300">
-          Jobs
+        <Link to="/createJob" className="hover:text-gray-300">
+          Create a Job
         </Link>
         <span className="text-gray-400">/</span>
 

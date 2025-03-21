@@ -22,29 +22,41 @@ var userSchema = new Schema({
         default: 'Seeker'
     },
 });
-var jobSchema = new Schema({
+var jobSchema = new mongoose_1.default.Schema({
     title: {
-        type: String,
-        required: true,
-    },
-    description: {
         type: String,
         required: true,
     },
     company: {
         type: String,
-        required: true,
-        unique: true
+        required: true
     },
+    logo: {
+        type: String
+    }, // Optional company logo URL
     postedAt: {
         type: Date,
-        default: Date.now
+        default: Date.now,
+    },
+    type: {
+        type: String,
+        enum: ["Full-time", "Part-time", "Contract", "Internship"],
+    },
+    level: {
+        type: String,
+        enum: ["Entry", "Mid", "Senior", "Lead"],
+    },
+    salary: {
+        type: String,
+    },
+    location: {
+        type: String,
     },
     companyId: {
         type: mongoose_1.default.Schema.Types.ObjectId,
-        ref: 'User',
-        required: true
-    }
+        ref: "User",
+        required: true,
+    },
 });
 var applicationSchema = new Schema({
     name: {

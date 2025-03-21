@@ -22,7 +22,7 @@ function Signin() {
         const token  = resp.data.Token;
         localStorage.setItem("token",token);
         
-        // navigate("/signin");
+        navigate("/Home");
       } catch (error: any) {
         setErr(error.response.data.Error);
       }

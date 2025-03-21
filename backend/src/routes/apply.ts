@@ -5,11 +5,16 @@ import { Application } from "../db";
 import {auth} from "../middlewares/auth"
 import {restrictTo} from "../middlewares/restrictTo"
 
-router.post('/', auth, restrictTo('Seeker'),async(req, res)=>{
+router.post('/:jobId', auth, restrictTo('Seeker'),async(req, res)=>{
     try {
         // @ts-ignore
         const {id} = req.id;
-        const {name, resumeUrl, jobId} = req.body;
+        const {name, resumeUrl} = req.body;
+        const {jobId} = req.params;
+
+        if (!name || !resumeUrl) {
+            return res.status(400).json({ error: "Name and resume URL are required" });
+        }
 
         await Application.create({
             name,

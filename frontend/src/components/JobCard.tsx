@@ -1,15 +1,17 @@
 import { Link } from 'react-router-dom';
 
 type Job = {
-  id: string;
-  company: { name: string; logo: string };
-  title: string;
-  postedAt: string;
+  _id: string;
+  title:string;
+  logo:string;
+  company:string;
   type: string;
   level: string;
   salary: string;
   location: string;
 };
+
+
 
 type JobCardProps = {
   job: Job;
@@ -22,13 +24,13 @@ export default function JobCard({ job }: JobCardProps) {
       <div className="flex justify-between items-start">
         <div className="flex items-center gap-3">
           <img
-            src={job.company.logo}
-            alt={`${job.company.name} logo`}
+            src={job.logo}
+            alt={`${job.title} logo`}
             className="w-10 h-10 rounded-full"
           />
           <div>
-            <h3 className="text-lg font-semibold text-gray-800">{job.company.name}</h3>
-            <p className="text-sm text-gray-500">{job.postedAt}</p>
+            <h3 className="text-lg font-semibold text-gray-800">{job.company}</h3>
+           
           </div>
         </div>
         
@@ -54,7 +56,7 @@ export default function JobCard({ job }: JobCardProps) {
           <p className="text-sm text-gray-500">{job.location}</p>
         </div>
         <Link
-          to={`/jobs/${job.id}`}
+          to={`/apply/${job._id}`}
           className="bg-black text-white px-4 py-2 rounded-md hover:bg-gray-800"
         >
           Apply now

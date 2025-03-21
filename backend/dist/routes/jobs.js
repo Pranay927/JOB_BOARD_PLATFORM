@@ -47,23 +47,27 @@ var auth_1 = require("../middlewares/auth");
 var restrictTo_1 = require("../middlewares/restrictTo");
 // Route to create a new Job : restricted to user of Role: "company"
 router.post('/', auth_1.auth, (0, restrictTo_1.restrictTo)('Company'), function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var _a, title, description, company, companyId, jobSchemaCheck, newJob, error_1;
+    var _a, title, company, logo, type, level, salary, location_1, companyId, jobSchemaCheck, newJob, error_1;
     return __generator(this, function (_b) {
         switch (_b.label) {
             case 0:
                 _b.trys.push([0, 2, , 3]);
-                _a = req.body, title = _a.title, description = _a.description, company = _a.company;
+                _a = req.body, title = _a.title, company = _a.company, logo = _a.logo, type = _a.type, level = _a.level, salary = _a.salary, location_1 = _a.location;
                 companyId = req.id;
-                jobSchemaCheck = types_1.jobSchema.safeParse({ title: title, description: description, company: company });
+                jobSchemaCheck = types_1.jobSchema.safeParse({ title: title, logo: logo, type: type, level: level, salary: salary, location: location_1 });
                 if (!jobSchemaCheck.success) {
                     res.status(400).json({ Error: jobSchemaCheck.error });
                     return [2 /*return*/];
                 }
                 return [4 /*yield*/, db_1.Jobs.create({
-                        title: title,
-                        description: description,
                         company: company,
-                        companyId: companyId
+                        title: title,
+                        logo: logo,
+                        type: type,
+                        level: level,
+                        salary: salary,
+                        location: location_1,
+                        companyId: companyId,
                     })];
             case 1:
                 newJob = _b.sent();

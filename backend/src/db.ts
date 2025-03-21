@@ -24,6 +24,10 @@ const jobSchema = new mongoose.Schema({
       required: true,
     },
    
+    company:{
+      type:String,
+      required:true
+    },
     
     logo: { 
         type: String 

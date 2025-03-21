@@ -44,14 +44,18 @@ var router = express_1.default.Router();
 var db_1 = require("../db");
 var auth_1 = require("../middlewares/auth");
 var restrictTo_1 = require("../middlewares/restrictTo");
-router.post('/', auth_1.auth, (0, restrictTo_1.restrictTo)('Seeker'), function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+router.post('/:jobId', auth_1.auth, (0, restrictTo_1.restrictTo)('Seeker'), function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var id, _a, name_1, resumeUrl, jobId, error_1;
     return __generator(this, function (_b) {
         switch (_b.label) {
             case 0:
                 _b.trys.push([0, 2, , 3]);
                 id = req.id.id;
-                _a = req.body, name_1 = _a.name, resumeUrl = _a.resumeUrl, jobId = _a.jobId;
+                _a = req.body, name_1 = _a.name, resumeUrl = _a.resumeUrl;
+                jobId = req.params.jobId;
+                if (!name_1 || !resumeUrl) {
+                    return [2 /*return*/, res.status(400).json({ error: "Name and resume URL are required" })];
+                }
                 return [4 /*yield*/, db_1.Application.create({
                         name: name_1,
                         resumeUrl: resumeUrl,

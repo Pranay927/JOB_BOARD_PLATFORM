@@ -4,71 +4,49 @@ import axios from 'axios';
 import Navbar from '../components/Navbar';
 import JobCard from '../components/JobCard';
 
-// Mock data for testing
-const mockJobs = [
-  {
-    id: "1",
-    company: {
-      name: "Amazon",
-      logo: "https://logo.clearbit.com/amazon.com",
-    },
-    title: "Senior UI/UX Designer",
-    postedAt: "5 days ago",
-    type: "Part-time",
-    level: "Senior level",
-    salary: "$120/hr",
-    location: "San Francisco, CA",
-  },
-  {
-    id: "2",
-    company: {
-      name: "Google",
-      logo: "https://logo.clearbit.com/google.com",
-    },
-    title: "Graphic Designer",
-    postedAt: "30 days ago",
-    type: "Full-time",
-    level: "Flexible schedule",
-    salary: "$150 - 220k",
-    location: "Mountain View, CA",
-  },
-  {
-    id: "3",
-    company: {
-      name: "Dribbble",
-      logo: "https://logo.clearbit.com/dribbble.com",
-    },
-    title: "Senior Motion Designer",
-    postedAt: "18 days ago",
-    type: "Contract",
-    level: "Remote",
-    salary: "$85/hr",
-    location: "San Francisco, CA",
-  },
-];
 
 export default function Home() {
-  const [jobs, setJobs] = useState<any[]>([]);
+  const [jobs, setJobs] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
   useEffect(() => {
-    // Comment out the API call and use mockJobs for testing
-    // axios
-    //   .get('http://localhost:3001/api/v1/jobs/')
-    //   .then((res) => setJobs(res.data))
-    //   .catch((err) => console.error(err));
+    const fetchJobs = async () => {
+      try {
+        const response = await axios.get("http://localhost:3001/api/v1/jobs/");
+        setJobs(response.data.Message); // Assuming jobs are in `Message`
+      } catch (err) {
+        setError("Failed to fetch jobs");
+        console.error("Error fetching jobs:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-    // Use mock data for testing
-    setJobs(mockJobs);
+    fetchJobs();
   }, []);
+
 
   return (
     <div className="min-h-screen bg-gray-100 p-4">
-      <Navbar/>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 max-w-6xl mx-auto">
-        {jobs.map((job) => (
-          <JobCard key={job.id} job={job} />
-        ))}
-      </div>
+      <Navbar />
+  
+      {/* Loading State */}
+      {loading && <p className="text-center text-gray-500">Loading jobs...</p>}
+  
+      {/* Error State */}
+      {error && <p className="text-center text-red-500">{error}</p>}
+  
+      {/* Job Listings */}
+      {!loading && !error && (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 max-w-6xl mx-auto">
+          {jobs.length === 0 ? (
+            <p className="text-gray-500 text-center col-span-full">No jobs available.</p>
+          ) : (
+            jobs.map((job, index) => <JobCard key={index} job={job} />)
+          )}
+        </div>
+      )}
     </div>
   );
 }

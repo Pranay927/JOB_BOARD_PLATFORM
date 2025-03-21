@@ -46,7 +46,6 @@ var router = express_1.default.Router();
 var db_1 = require("../db");
 var config_1 = require("../config");
 var types_1 = require("../types");
-var auth_1 = require("../middlewares/auth");
 router.post("/signup", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var _a, username, password, role, inputCheck, hashedPassword, error_1;
     return __generator(this, function (_b) {
@@ -119,19 +118,6 @@ router.post("/signin", function (req, res) { return __awaiter(void 0, void 0, vo
                 return [3 /*break*/, 4];
             case 4: return [2 /*return*/];
         }
-    });
-}); });
-router.post("/authenticated", auth_1.auth, function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var id;
-    return __generator(this, function (_a) {
-        id = req.id;
-        try {
-            res.json({ Message: "Your Token is " + id });
-        }
-        catch (error) {
-            res.status(400).json({ Error: error });
-        }
-        return [2 /*return*/];
     });
 }); });
 exports.default = router;

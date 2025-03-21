@@ -12,7 +12,7 @@ import { restrictTo } from '../middlewares/restrictTo';
 // Route to create a new Job : restricted to user of Role: "company"
 router.post('/', auth, restrictTo('Company'), async(req,res)=>{
     try {
-        const { title, logo ,type, level, salary, location } = req.body;
+        const { title,company, logo ,type, level, salary, location } = req.body;
         // @ts-ignore
         const companyId = req.id;
         const jobSchemaCheck = jobSchema.safeParse({title, logo ,type, level, salary, location})
@@ -21,6 +21,7 @@ router.post('/', auth, restrictTo('Company'), async(req,res)=>{
             return;
         }
         const newJob = await Jobs.create({
+            company,
             title,
             logo,
             type,
