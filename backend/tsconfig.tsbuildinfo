@@ -1,1 +1,1 @@
-{"root":["./src/config.ts","./src/db.ts","./src/index.ts","./src/types.ts","./src/middlewares/auth.ts","./src/middlewares/restrictto.ts","./src/routes/apply.ts","./src/routes/jobs.ts","./src/routes/user.ts"],"version":"5.8.2"}
+{"root":["./src/config.ts","./src/db.ts","./src/index.ts","./src/types.ts","./src/middlewares/auth.ts","./src/middlewares/rate_limit.ts","./src/middlewares/restrictto.ts","./src/routes/apply.ts","./src/routes/jobs.ts","./src/routes/user.ts"],"version":"5.8.2"}
