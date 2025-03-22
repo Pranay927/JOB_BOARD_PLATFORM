@@ -52,7 +52,10 @@ router.post("/signin", async(req, res)=>{
         if(JWT_SECRET === undefined) return;
         const token = jwt.sign({id:user._id, role:user.role}, JWT_SECRET)
         res.json({Message: `${user.username} is signed in! `,
-                  Token:token});
+                  Token:token,
+                  name:username,
+                  role:user.role
+                });
         
         return;
         } catch (error) {

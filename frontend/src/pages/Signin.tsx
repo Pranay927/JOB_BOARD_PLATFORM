@@ -1,6 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
+import { useGlobalStore } from "../store/useGlobalStore";
 
 
 function Signin() {
@@ -8,6 +9,8 @@ function Signin() {
     
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+
+    const { setUser } = useGlobalStore();
 
     const [err, setErr] = useState<string | null>(null);
   
@@ -22,6 +25,8 @@ function Signin() {
         const token  = resp.data.Token;
         localStorage.setItem("token",token);
         
+        const {name, role} = resp.data;
+        setUser(name, role);
         navigate("/Home");
       } catch (error: any) {
         setErr(error.response.data.Error);

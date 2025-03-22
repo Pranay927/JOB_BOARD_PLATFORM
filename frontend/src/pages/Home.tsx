@@ -1,7 +1,7 @@
 // src/pages/Home.tsx
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import Navbar from '../components/Navbar';
+
 import JobCard from '../components/JobCard';
 
 
@@ -9,6 +9,7 @@ export default function Home() {
   const [jobs, setJobs] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  
 
   useEffect(() => {
     const fetchJobs = async () => {
@@ -28,9 +29,8 @@ export default function Home() {
 
 
   return (
-    <div className="min-h-screen bg-gray-100 p-4">
-      <Navbar />
-  
+    <div className="min-h-screen bg-gray-100 p-4 dark:bg-[#212121]">
+
       {/* Loading State */}
       {loading && <p className="text-center text-gray-500">Loading jobs...</p>}
   

@@ -11,7 +11,7 @@ app.use(cors())
 app.use(express.json());
 app.use("/api/v1/user", user);
 app.use("/api/v1/jobs", jobs);
-app.use("/api/v1/apply", jobs);
+app.use("/api/v1/apply", apply);
 
 
 

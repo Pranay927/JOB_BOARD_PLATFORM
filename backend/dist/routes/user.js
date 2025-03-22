@@ -110,7 +110,7 @@ router.post("/signin", function (req, res) { return __awaiter(void 0, void 0, vo
                     return [2 /*return*/];
                 token = jsonwebtoken_1.default.sign({ id: user._id, role: user.role }, config_1.JWT_SECRET);
                 res.json({ Message: "".concat(user.username, " is signed in! "),
-                    Token: token });
+                    Token: token, username: username, role: user.role });
                 return [2 /*return*/];
             case 3:
                 error_2 = _b.sent();
