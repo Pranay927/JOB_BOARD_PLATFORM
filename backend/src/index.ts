@@ -1,14 +1,19 @@
 import { PORT, DATABASE_URL } from "./config";
 import express from "express"
 import mongoose from "mongoose";
+import cors from "cors";
+
 const app = express();
+
 import user from "./routes/user"
 import jobs from './routes/jobs'
 import apply from "./routes/apply"
-import cors from "cors";
+import { limiter } from "./middlewares/rate_limit";
+
 
 app.use(cors())
 app.use(express.json());
+app.use(limiter)
 app.use("/api/v1/user", user);
 app.use("/api/v1/jobs", jobs);
 app.use("/api/v1/apply", apply);
